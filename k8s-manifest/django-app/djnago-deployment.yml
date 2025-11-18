@@ -13,28 +13,32 @@ spec:
       labels:
         app: mysite
     spec:
+
+      # ------------------------------
+      # 1) DB migrate 먼저 실행 (initContainer)
+      # ------------------------------
+      initContainers:
+        - name: migrate
+          image: ju0lee/mysite:build-1   # Jenkins가 자동으로 업데이트할 부분
+          command: ["sh", "-c", "python manage.py migrate"]
+          envFrom:
+            - secretRef:
+                name: django-secret
+            - configMapRef:
+                name: django-config
+
+      # ------------------------------
+      # 2) Django 메인 앱 컨테이너
+      # ------------------------------
       containers:
         - name: mysite
-          image: ju0lee/mysite:0.1.0
+          image: ju0lee/mysite:build-1   # Jenkins가 자동 업데이트하는 이미지
           ports:
             - containerPort: 8000
-          env:
-            - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-secret
-                  key: POSTGRES_DB
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-secret
-                  key: POSTGRES_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: POSTGRES_PASSWORD
-                  key: POSTGRES_PASSWORD
-            - name: POSTGRES_HOST
-              value: "postgres"
-            - name: POSTGRES_PORT
-              value: "5432"
+          envFrom:
+            - secretRef:
+                name: django-secret
+            - configMapRef:
+                name: django-config
+          command: ["sh", "-c"]
+          args: ["gunicorn mysite.wsgi:application --bind 0.0.0.0:8000"]
