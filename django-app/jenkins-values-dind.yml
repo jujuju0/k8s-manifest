@@ -1,0 +1,10 @@
+controller:
+  additionalContainers:
+    - name: dind
+      image: docker:24-dind
+      securityContext:
+        privileged: true
+      args: ["--host=tcp://localhost:2375"]
+  env:
+    - name: DOCKER_HOST
+      value: tcp://localhost:2375
