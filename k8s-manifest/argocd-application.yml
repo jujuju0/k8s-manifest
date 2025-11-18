@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/yourorg/k8s-manifest.git'
+    repoURL: 'https://github.com/jujuju0/k8s-manifest.git'
     targetRevision: main
     path: deploy            # manifests 경로
   destination:
