@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/jujuju0/k8s-manifest.git'
     targetRevision: main
-    path: deploy            # manifests 경로
+    path: django-app            # manifests 경로
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: django-app
