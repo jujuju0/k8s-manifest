@@ -19,7 +19,7 @@ spec:
       # ------------------------------
       initContainers:
         - name: migrate
-          image: ju0lee/mysite:latest   # Jenkins가 자동으로 업데이트할 부분
+          image: ju0lee/mysite:build-14
           command: ["sh", "-c", "python manage.py migrate"]
           envFrom:
             - secretRef:
@@ -32,7 +32,7 @@ spec:
       # ------------------------------
       containers:
         - name: mysite
-          image: ju0lee/mysite:latest   # Jenkins가 자동 업데이트하는 이미지
+          image: ju0lee/mysite:build-14
           ports:
             - containerPort: 8000
           envFrom:
