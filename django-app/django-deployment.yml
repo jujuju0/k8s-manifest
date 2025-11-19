@@ -40,5 +40,5 @@ spec:
                 name: db-secret
             - configMapRef:
                 name: django-config
-          command: ["sh", "-c"]
-          args: ["gunicorn mysite.wsgi:application --bind 0.0.0.0:8000"]
+          command: ["gunicorn"]
+          args: ["config.wsgi:application", "--bind", "0.0.0.0:8000"]
