@@ -19,7 +19,7 @@ spec:
       # ------------------------------
       initContainers:
         - name: migrate
-          image: ju0lee/mysite:build-18
+          image: ju0lee/mysite:build-19
           command: ["sh", "-c", "python manage.py migrate"]
           envFrom:
             - secretRef:
@@ -32,7 +32,7 @@ spec:
       # ------------------------------
       containers:
         - name: mysite
-          image: ju0lee/mysite:build-18
+          image: ju0lee/mysite:build-19
           ports:
             - containerPort: 8000
           envFrom:
